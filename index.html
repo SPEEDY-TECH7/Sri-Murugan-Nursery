@@ -1349,7 +1349,7 @@ async function doSignup(){
       if(error) throw error;
       const authUser = data?.user;
       if(authUser && data?.session){
-        const profile = { id: authUser.id, name, email, phone, create_at: new Date().toISOString(), is_admin_flag: false };
+        const profile = { id: authUser.id, name, email, phone, created_at: new Date().toISOString(), is_admin_flag: false };
         await dbSaveUser(profile);
         sto.user = profile;
         // Check admins table for admin access
