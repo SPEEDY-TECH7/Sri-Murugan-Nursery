@@ -860,7 +860,7 @@ async function loadOrders(){
     let data;
     let error;
     try{
-      ({ data, error } = await supabaseClient.from('orders').select('*').order('createdAt', { ascending: false }));
+      ({ data, error } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false }));
       if(error) throw error;
     }catch(e){
       ({ data, error } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false }));
