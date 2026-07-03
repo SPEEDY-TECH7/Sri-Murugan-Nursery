@@ -742,11 +742,13 @@ async function initSupabase(){
     supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
     useCloud = true;
     console.log('Supabase connected ✓');
-    await restoreSession();
+    restoreSession().then(() => {
     updateAuthUI();
     updateOrderBadge();
+    });
     syncSeed();
     startRealtimeListeners();
+
     //showSync('Connected to cloud ✓', true);
     return true;
   }catch(e){
