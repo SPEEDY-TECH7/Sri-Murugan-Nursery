@@ -1390,7 +1390,26 @@ function updateAuthUI(){
   document.getElementById('bnav-user-lbl').textContent=li?'Orders':'Login';
   if(sto.isAdmin) updateOrderBadge();
 }
-function bnavUser(){if(sto.user)showPage('orders');else openModal('login')}
+function bnavUser(){
+  if(sto.user){
+    // Show a simple action sheet with Orders + Logout
+    const existing = document.getElementById('bnav-sheet');
+    if(existing){ existing.remove(); return; }
+    const sheet = document.createElement('div');
+    sheet.id = 'bnav-sheet';
+    sheet.style.cssText = 'position:fixed;bottom:72px;left:0;right:0;background:#fff;border-top:1px solid var(--br);z-index:900;padding:8px 0;box-shadow:0 -4px 20px rgba(0,0,0,.1)';
+    sheet.innerHTML = `
+      <div onclick="showPage('orders');document.getElementById('bnav-sheet').remove()" style="padding:14px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--td)">📦 My Orders</div>
+      <div onclick="logout();document.getElementById('bnav-sheet')?.remove()" style="padding:14px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:10px;color:#c0392b">🚪 Logout</div>`;
+    document.body.appendChild(sheet);
+    // Close when tapping outside
+    setTimeout(()=>document.addEventListener('click', function handler(e){
+      if(!sheet.contains(e.target)){sheet.remove();document.removeEventListener('click',handler)}
+    }), 100);
+  } else {
+    openModal('login');
+  }
+}
 
 /* ═══════════════════════════════════════════════════
    MODALS
