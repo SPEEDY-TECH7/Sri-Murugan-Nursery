@@ -771,7 +771,7 @@ async function restoreSession(){
         email: authUser.email,
         name: authUser.user_metadata?.name || '',
         phone: authUser.user_metadata?.phone || '',
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         is_admin_flag: false,
       };
     }
