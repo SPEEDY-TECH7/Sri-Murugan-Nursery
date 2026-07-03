@@ -747,6 +747,9 @@ async function initSupabase(){
     updateOrderBadge();
     syncSeed();
     startRealtimeListeners();
+    loadUsers();
+    loadOrders();
+    loadProducts();
 
     //showSync('Connected to cloud ✓', true);
     return true;
