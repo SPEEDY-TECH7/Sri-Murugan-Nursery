@@ -745,7 +745,7 @@ async function initSupabase(){
     await restoreSession();
     syncSeed();
     startRealtimeListeners();
-    showSync('Connected to cloud ✓', true);
+    //showSync('Connected to cloud ✓', true);
     return true;
   }catch(e){
     console.error('Supabase init failed:',e);
