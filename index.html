@@ -1312,7 +1312,7 @@ async function doLogin(){
       if(profile){
         sto.user = mapDbTimestamps(profile);
       } else {
-        const newProfile = { id: authUser.id, name: authUser.user_metadata?.name || '', email: authUser.email, phone: authUser.user_metadata?.phone || '', createdAt: new Date().toISOString(), is_admin_flag: false };
+        const newProfile = { id: authUser.id, name: authUser.user_metadata?.name || '', email: authUser.email, phone: authUser.user_metadata?.phone || '', created_at: new Date().toISOString(), is_admin_flag: false };
         try{ await dbSaveUser(newProfile); sto.user = newProfile; }catch(e){ console.warn('Profile create error', e); sto.user = { id: authUser.id, email: authUser.email }; }
       }
       // Check admins table to determine admin status (supports admins table approach)
@@ -1345,7 +1345,7 @@ async function doSignup(){
       if(error) throw error;
       const authUser = data?.user;
       if(authUser && data?.session){
-        const profile = { id: authUser.id, name, email, phone, createdAt: new Date().toISOString(), is_admin_flag: false };
+        const profile = { id: authUser.id, name, email, phone, create_at: new Date().toISOString(), is_admin_flag: false };
         await dbSaveUser(profile);
         sto.user = profile;
         // Check admins table for admin access
@@ -1361,7 +1361,7 @@ async function doSignup(){
       }
     }catch(e){ console.error('Signup error', e); err.textContent = e.message || 'Signup failed. Please try again.'; err.style.display='block'; }
   } else {
-    const u={id:Date.now(),name,email,phone,password:pw,createdAt:new Date().toISOString()};
+    const u={id:Date.now(),name,email,phone,created_at:new Date().toISOString()};
     try{ await dbSaveUser(u); sto.user=u; saveLocal(); closeModal(); updateAuthUI(); toast(`Welcome, ${name}! 🌱`); }
     catch(e){ sto.users.push(u); saveLocal(); sto.user=u; closeModal(); updateAuthUI(); toast(`Welcome, ${name}! 🌱`); }
   }
