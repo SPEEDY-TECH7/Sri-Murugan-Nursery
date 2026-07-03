@@ -307,6 +307,7 @@ tr:hover td{background:#fafaf8}
   body{padding-bottom:72px}
   #bnav{display:block}
   .nav-links,.nav-act .btn-o,.nav-act .btn-p,.cart-b{display:none}
+  #nav-logout:not(.hidden){display:inline-flex!important}
   .nav-i{height:54px;padding:0 14px}
   .nav-logo img{width:38px;height:38px}
   #hero{padding:36px 16px 46px;text-align:center}
@@ -420,7 +421,7 @@ tr:hover td{background:#fafaf8}
       <span id="nav-greet" style="font-size:13px;color:var(--tm);display:none"></span>
       <button class="btn btn-o btn-sm" id="nav-login" onclick="openModal('login')">Login</button>
       <button class="btn btn-p btn-sm" id="nav-signup" onclick="openModal('signup')">Sign Up</button>
-      <button class="btn btn-o btn-sm hidden" id="nav-logout" onclick="logout()">Logout</button>
+      <button class="btn btn-d btn-sm hidden" id="nav-logout" onclick="logout()">Logout</button>
       <button class="cart-b" onclick="onCartClick()" id="cart-btn">
         🛒 <span>Cart</span>
         <span class="cart-cnt hidden" id="cart-cnt">0</span>
@@ -1390,26 +1391,7 @@ function updateAuthUI(){
   document.getElementById('bnav-user-lbl').textContent=li?'Orders':'Login';
   if(sto.isAdmin) updateOrderBadge();
 }
-function bnavUser(){
-  if(sto.user){
-    // Show a simple action sheet with Orders + Logout
-    const existing = document.getElementById('bnav-sheet');
-    if(existing){ existing.remove(); return; }
-    const sheet = document.createElement('div');
-    sheet.id = 'bnav-sheet';
-    sheet.style.cssText = 'position:fixed;bottom:72px;left:0;right:0;background:#fff;border-top:1px solid var(--br);z-index:900;padding:8px 0;box-shadow:0 -4px 20px rgba(0,0,0,.1)';
-    sheet.innerHTML = `
-      <div onclick="showPage('orders');document.getElementById('bnav-sheet').remove()" style="padding:14px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--td)">📦 My Orders</div>
-      <div onclick="logout();document.getElementById('bnav-sheet')?.remove()" style="padding:14px 20px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:10px;color:#c0392b">🚪 Logout</div>`;
-    document.body.appendChild(sheet);
-    // Close when tapping outside
-    setTimeout(()=>document.addEventListener('click', function handler(e){
-      if(!sheet.contains(e.target)){sheet.remove();document.removeEventListener('click',handler)}
-    }), 100);
-  } else {
-    openModal('login');
-  }
-}
+function bnavUser(){if(sto.user)showPage('orders');else openModal('login')}
 
 /* ═══════════════════════════════════════════════════
    MODALS
